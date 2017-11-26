@@ -1,0 +1,23 @@
+{
+  "name": "contoso-bank-limited",
+  "version": "1.0.0",
+  "description": "Contoso Bank Limited - MSA Advanced Training by Michael Mui",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ooohmikey/Contoso-Bank-Limited.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ooohmikey/Contoso-Bank-Limited/issues"
+  },
+  "homepage": "https://github.com/ooohmikey/Contoso-Bank-Limited#readme",
+  "dependencies": {
+    "botbuilder": "^3.12.0",
+    "restify": "^6.3.4"
+  }
+}
