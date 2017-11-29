@@ -10,6 +10,7 @@ exports.startDialog = function (bot) {
 
     bot.recognizer(recognizer);
 
+    //Get the account balances of user
     bot.dialog('GetBalance', [
         function (session, args, next) {
             session.dialogData.args = args || {};        
@@ -33,7 +34,7 @@ exports.startDialog = function (bot) {
         }
     ]).triggerAction({
         matches: 'GetBalance'
-    });;
+    });
 
     //GetAccounts and displays the list of accounts owned by the user
     bot.dialog('GetAccounts', [
@@ -61,16 +62,10 @@ exports.startDialog = function (bot) {
         matches: 'GetAccounts'
     });
 
-    bot.dialog('Deposit', function (session, args) {
-        session.send("Depositing amount into your account");
+    bot.dialog('TransferMoney', function (session, args) {
+        session.send("Transferring...");
     }).triggerAction({
-        matches: 'Deposit'
-    });
-
-    bot.dialog('Withdraw', function (session, args) {
-        session.send("Withdrawing amount from your account");
-    }).triggerAction({
-        matches: 'Withdraw'
+        matches: 'TransferMoney'
     });
 
     bot.dialog('Welcome', function (session, args) {
