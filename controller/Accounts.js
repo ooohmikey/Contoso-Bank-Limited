@@ -24,7 +24,7 @@ function handleUserAccounts(message, session, username) {
             }
         }        
     }
-    
+
     session.send("%s, Here are your accounts: %s", username, allAccounts);                
     
 }
