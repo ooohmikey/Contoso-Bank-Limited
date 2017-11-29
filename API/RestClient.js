@@ -10,3 +10,14 @@ exports.getUserAccounts = function getData(url, session, username, callback){
         }
     });
 };
+
+exports.getAccountBalances = function getData(url, session, username, callback){
+    request.get(url, {'headers': {'ZUMO-API-VERSION': '2.0.0'}}, function(error, res, body){
+        if (error){
+            console.log(error);
+        }
+        else{
+            callback(body, session, username);
+        }
+    });
+};

@@ -1,5 +1,6 @@
 var builder = require('botbuilder');
 var accounts = require('./Accounts');
+var balance = require('./Balance');
 // Some sections have been omitted
 
 exports.startDialog = function (bot) {
@@ -9,11 +10,30 @@ exports.startDialog = function (bot) {
 
     bot.recognizer(recognizer);
 
-    bot.dialog('GetBalance', function (session, args) {
-        session.send("Your balance for accounts:");
-    }).triggerAction({
+    bot.dialog('GetBalance', [
+        function (session, args, next) {
+            session.dialogData.args = args || {};        
+            if (!session.conversationData["username"]) {
+                builder.Prompts.text(session, "Enter a username to get details.");                
+            } 
+            else {
+                next(); // Skip if we already have this info.
+            }
+        },
+        function (session, results, next) {
+            //if (!isAttachment(session)) {
+
+                if (results.response) {
+                    session.conversationData["username"] = results.response;
+                }
+
+                session.send("Getting your balances...");
+                balance.displayBalances(session, session.conversationData["username"]);
+            //}
+        }
+    ]).triggerAction({
         matches: 'GetBalance'
-    });
+    });;
 
     //GetAccounts and displays the list of accounts owned by the user
     bot.dialog('GetAccounts', [
@@ -34,7 +54,7 @@ exports.startDialog = function (bot) {
                 }
 
                 session.send("Getting your accounts...");
-                accounts.displayAccounts(session, session.conversationData["username"]);  // <---- THIS LINE HERE IS WHAT WE NEED 
+                accounts.displayAccounts(session, session.conversationData["username"]);
             //}
         }
     ]).triggerAction({
@@ -63,5 +83,17 @@ exports.startDialog = function (bot) {
         session.send("Conversion rate intent");
     }).triggerAction({
         matches: 'GetConversionRate'
+    });
+    
+    bot.dialog('UserIntent', function (session, args) {
+        session.send("Hi there");
+    }).triggerAction({
+        matches: 'UserIntent'
+    });
+
+    bot.dialog('GetStocks', function (session, args) {
+        session.send("Get stocks intent");
+    }).triggerAction({
+        matches: 'GetStocks'
     });
 }
